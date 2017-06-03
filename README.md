@@ -5,9 +5,12 @@
 * Import the project to eclipse as an eclipse maven project. You have the option to run it in Eclipse now.
 * Alternative option to build a jar for distribution. For this if you have m2e plugin in eclipse, just right click and Run As Maven Install. Check the target folder for results.
 
-* The real quick way is to run the quick-simulate-1.0.jar which I built in the home directory.
+* The real quick way is to run the quick-simulate-1.0.jar, which I built in the home directory. Note that it picks up dependency from dependency_jar folder. These two are of no consequence if you are planning to build one yourself.
 
 `java -jar quick-simulate-1.0.jar` 
+`java -jar quick-simulate-1.0.jar -c SampleRun.txt` 
+
+`java -jar quick-simulate-1.0.jar -c SampleRun.txt -v info` if you want to trace execution.
 
 ## This App solves the puzzle
 ---
