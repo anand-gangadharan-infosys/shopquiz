@@ -1,20 +1,18 @@
-package com.anand.shopquiz.quick_simulate;
+package com.anand.shopquiz.quick_simulate.actors;
+
+import com.anand.shopquiz.quick_simulate.exceptions.NoItemsToBillException;
 
 public class Customer {
 
-	enum CustomerType {
+	public enum CustomerType {
 		A, B
 	}
 
-	CustomerType type;
-
-	int arrivalMoment;
-
-	int numberofItems;
-
-	static int id = 0;
-
-	String objectIdentifier;
+	private CustomerType type;
+	private int arrivalMoment;
+	private int numberofItems;
+	private static int id = 0;
+	private String objectIdentifier;
 
 	public Customer(int arrivalMoment, int numberofItems, CustomerType type) {
 		id++;
@@ -59,6 +57,6 @@ public class Customer {
 		if (numberofItems == 0) {
 			throw new NoItemsToBillException();
 		}
-
 	}
+
 }

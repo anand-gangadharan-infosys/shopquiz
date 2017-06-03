@@ -1,6 +1,8 @@
-package com.anand.shopquiz.quick_simulate;
+package com.anand.shopquiz.quick_simulate.utils;
 
 import java.util.Comparator;
+
+import com.anand.shopquiz.quick_simulate.actors.Cashier;
 
 public class CashierPendingItemsComparator implements Comparator<Cashier> {
 

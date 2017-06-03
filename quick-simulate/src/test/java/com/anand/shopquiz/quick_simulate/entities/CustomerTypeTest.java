@@ -1,4 +1,4 @@
-package com.anand.shopquiz.quick_simulate;
+package com.anand.shopquiz.quick_simulate.entities;
 
 import static org.junit.Assert.assertEquals;
 
@@ -10,7 +10,10 @@ import java.util.Queue;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.anand.shopquiz.quick_simulate.Customer.CustomerType;
+import com.anand.shopquiz.quick_simulate.actors.Cashier;
+import com.anand.shopquiz.quick_simulate.actors.Customer;
+import com.anand.shopquiz.quick_simulate.actors.Customer.CustomerType;
+import com.anand.shopquiz.quick_simulate.actors.ExpertCashier;
 
 public class CustomerTypeTest {
 
@@ -39,7 +42,6 @@ public class CustomerTypeTest {
 		cashier3 = new ExpertCashier();
 		cashier4 = new ExpertCashier();
 		cashier5 = new ExpertCashier();
-		
 
 		cashiers.add(cashier1);
 		cashiers.add(cashier2);
@@ -57,23 +59,23 @@ public class CustomerTypeTest {
 		customers.add(new Customer(1, 10, CustomerType.A));
 		customers.add(new Customer(1, 10, CustomerType.A));
 		customers.add(new Customer(1, 10, CustomerType.A));
-		
+
 		shop = new Shop(cashiers, customers);
 		runClock(5);
-		
-		assertEquals( 1,(int)cashier1.getPendingCustomers());
-		assertEquals( 1,(int)cashier2.getPendingCustomers());
-		assertEquals( 1,(int)cashier3.getPendingCustomers());
-		assertEquals( 1,(int)cashier4.getPendingCustomers());
-		assertEquals( 1,(int)cashier5.getPendingCustomers());
-		
-		assertEquals( 6,(int)cashier1.getNormalizedPendingItems());
-		assertEquals( 6,(int)cashier2.getNormalizedPendingItems());
-		assertEquals( 6,(int)cashier3.getNormalizedPendingItems());
-		assertEquals( 6,(int)cashier4.getNormalizedPendingItems());
-		assertEquals( 6,(int)cashier5.getNormalizedPendingItems());
+
+		assertEquals(1, (int) cashier1.getPendingCustomers());
+		assertEquals(1, (int) cashier2.getPendingCustomers());
+		assertEquals(1, (int) cashier3.getPendingCustomers());
+		assertEquals(1, (int) cashier4.getPendingCustomers());
+		assertEquals(1, (int) cashier5.getPendingCustomers());
+
+		assertEquals(6, (int) cashier1.getNormalizedPendingItems());
+		assertEquals(6, (int) cashier2.getNormalizedPendingItems());
+		assertEquals(6, (int) cashier3.getNormalizedPendingItems());
+		assertEquals(6, (int) cashier4.getNormalizedPendingItems());
+		assertEquals(6, (int) cashier5.getNormalizedPendingItems());
 	}
-	
+
 	@Test
 	public void testFirstCustomerTypeASequential() {
 		Queue<Customer> customers = new LinkedList<Customer>();
@@ -82,23 +84,23 @@ public class CustomerTypeTest {
 		customers.add(new Customer(3, 10, CustomerType.A));
 		customers.add(new Customer(4, 10, CustomerType.A));
 		customers.add(new Customer(5, 10, CustomerType.A));
-		
+
 		shop = new Shop(cashiers, customers);
 		runClock(5);
-		
-		assertEquals( 1,(int)cashier1.getPendingCustomers());
-		assertEquals( 1,(int)cashier2.getPendingCustomers());
-		assertEquals( 1,(int)cashier3.getPendingCustomers());
-		assertEquals( 1,(int)cashier4.getPendingCustomers());
-		assertEquals( 1,(int)cashier5.getPendingCustomers());
-		
-		assertEquals( 6,(int)cashier1.getNormalizedPendingItems());
-		assertEquals( 7,(int)cashier2.getNormalizedPendingItems());
-		assertEquals( 8,(int)cashier3.getNormalizedPendingItems());
-		assertEquals( 9,(int)cashier4.getNormalizedPendingItems());
-		assertEquals( 10,(int)cashier5.getNormalizedPendingItems());
+
+		assertEquals(1, (int) cashier1.getPendingCustomers());
+		assertEquals(1, (int) cashier2.getPendingCustomers());
+		assertEquals(1, (int) cashier3.getPendingCustomers());
+		assertEquals(1, (int) cashier4.getPendingCustomers());
+		assertEquals(1, (int) cashier5.getPendingCustomers());
+
+		assertEquals(6, (int) cashier1.getNormalizedPendingItems());
+		assertEquals(7, (int) cashier2.getNormalizedPendingItems());
+		assertEquals(8, (int) cashier3.getNormalizedPendingItems());
+		assertEquals(9, (int) cashier4.getNormalizedPendingItems());
+		assertEquals(10, (int) cashier5.getNormalizedPendingItems());
 	}
-	
+
 	@Test
 	public void testFirstCustomerTypeABSimulatneous() {
 		Queue<Customer> customers = new LinkedList<Customer>();
@@ -109,21 +111,21 @@ public class CustomerTypeTest {
 		customers.add(new Customer(1, 14, CustomerType.A));
 		customers.add(new Customer(1, 10, CustomerType.B));
 		customers.add(new Customer(1, 10, CustomerType.B));
-		
+
 		shop = new Shop(cashiers, customers);
 		runClock(5);
-		
-		assertEquals( 2,(int)cashier1.getPendingCustomers());
-		assertEquals( 2,(int)cashier2.getPendingCustomers());
-		assertEquals( 1,(int)cashier3.getPendingCustomers());
-		assertEquals( 1,(int)cashier4.getPendingCustomers());
-		assertEquals( 1,(int)cashier5.getPendingCustomers());
-		
-		assertEquals( 16,(int)cashier1.getNormalizedPendingItems());
-		assertEquals( 17,(int)cashier2.getNormalizedPendingItems());
-		assertEquals( 8,(int)cashier3.getNormalizedPendingItems());
-		assertEquals( 9,(int)cashier4.getNormalizedPendingItems());
-		assertEquals( 10,(int)cashier5.getNormalizedPendingItems());
+
+		assertEquals(2, (int) cashier1.getPendingCustomers());
+		assertEquals(2, (int) cashier2.getPendingCustomers());
+		assertEquals(1, (int) cashier3.getPendingCustomers());
+		assertEquals(1, (int) cashier4.getPendingCustomers());
+		assertEquals(1, (int) cashier5.getPendingCustomers());
+
+		assertEquals(16, (int) cashier1.getNormalizedPendingItems());
+		assertEquals(17, (int) cashier2.getNormalizedPendingItems());
+		assertEquals(8, (int) cashier3.getNormalizedPendingItems());
+		assertEquals(9, (int) cashier4.getNormalizedPendingItems());
+		assertEquals(10, (int) cashier5.getNormalizedPendingItems());
 	}
 
 }

@@ -1,4 +1,4 @@
-package com.anand.shopquiz.quick_simulate;
+package com.anand.shopquiz.quick_simulate.actors;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -6,24 +6,26 @@ import java.util.Queue;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.anand.shopquiz.quick_simulate.exceptions.NoItemsToBillException;
+
+/**
+ * Cashier of the Shop. Note that a normalized pending items is maintained and
+ * it is invariant for all types of cashiers.
+ * 
+ * @author anand_gangadharan
+ *
+ */
 public abstract class Cashier {
 
+	private int currentTime = 0;
+	private static int id = 0;
+	private Integer cashierId;
+
 	protected int delayFactor = 1;
-
-	Integer normalizedPendingItems = 0;
-
-	Integer pendingCustomers = 0;
-
-	int currentTime = 0;
-
-	Queue<Customer> customers = new LinkedList<Customer>();
-
-	static int id = 0;
-
-	Integer cashierId;
-
+	protected Integer normalizedPendingItems = 0;
+	protected Integer pendingCustomers = 0;
+	protected Queue<Customer> customers = new LinkedList<Customer>();
 	protected String name;
-
 	protected static final Logger logger = LogManager.getLogger(Cashier.class);
 
 	public Cashier() {
@@ -46,7 +48,7 @@ public abstract class Cashier {
 			Customer aCustomer = customers.peek();
 			try {
 				normalizedPendingItems--;
-				if(delayLatch())
+				if (delayLatch())
 					aCustomer.billOneItem();
 			} catch (NoItemsToBillException e) {
 				customers.remove();
