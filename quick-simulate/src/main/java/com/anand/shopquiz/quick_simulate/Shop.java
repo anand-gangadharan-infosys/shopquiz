@@ -75,10 +75,14 @@ public class Shop {
 			// Not done if any cashiers have pending customers.
 			for (Iterator<Cashier> iterator = cashiers.iterator(); iterator.hasNext();) {
 				Cashier cashier = iterator.next();
-				return (cashier.pendingCustomers > 0);
+				if (cashier.pendingCustomers > 0) {
+					return false;
+				}
 			}
+			return true;
+		} else {
+			return false;
 		}
-		return true;
 	}
 
 	private Cashier sortAndReturnHead(Comparator<Cashier> comparator) {
@@ -86,7 +90,7 @@ public class Shop {
 		logger.debug(" Sorting Cashiers ");
 		for (Iterator<Cashier> iterator = cashiers.iterator(); iterator.hasNext();) {
 			Cashier cashier = iterator.next();
-			logger.trace("cashier id "+cashier.getCashierId());
+			logger.trace("cashier id " + cashier.getCashierId());
 		}
 		Cashier res = cashiers.get(0);
 		logger.info(res);

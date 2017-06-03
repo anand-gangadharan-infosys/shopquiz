@@ -1,6 +1,6 @@
 package com.anand.shopquiz.quick_simulate;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -30,27 +30,27 @@ public class CashierSelectTest {
 		
 		cashier1 = mock(Cashier.class);
 		when(cashier1.getPendingCustomers()).thenReturn(3);
-		when(cashier1.getPendingItems()).thenReturn(5);
+		when(cashier1.getNormalizedPendingItems()).thenReturn(5);
 		when(cashier1.getCashierId()).thenReturn(1);
 		
 		cashier2 = mock(Cashier.class);
 		when(cashier2.getPendingCustomers()).thenReturn(2);
-		when(cashier2.getPendingItems()).thenReturn(10);
+		when(cashier2.getNormalizedPendingItems()).thenReturn(10);
 		when(cashier2.getCashierId()).thenReturn(2);
 		
 		cashier3 = mock(Cashier.class);
 		when(cashier3.getPendingCustomers()).thenReturn(5);
-		when(cashier3.getPendingItems()).thenReturn(8);
+		when(cashier3.getNormalizedPendingItems()).thenReturn(8);
 		when(cashier3.getCashierId()).thenReturn(3);
 		
 		cashier4 = mock(Cashier.class);
 		when(cashier4.getPendingCustomers()).thenReturn(2);
-		when(cashier4.getPendingItems()).thenReturn(12);
+		when(cashier4.getNormalizedPendingItems()).thenReturn(12);
 		when(cashier4.getCashierId()).thenReturn(4);
 		
 		cashier5 = mock(Cashier.class);
 		when(cashier5.getPendingCustomers()).thenReturn(4);
-		when(cashier5.getPendingItems()).thenReturn(5);
+		when(cashier5.getNormalizedPendingItems()).thenReturn(5);
 		when(cashier5.getCashierId()).thenReturn(5);
 		
 		Queue<Customer> customers = new LinkedList<Customer>();

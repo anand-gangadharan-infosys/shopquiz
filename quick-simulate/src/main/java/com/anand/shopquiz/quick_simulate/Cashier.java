@@ -6,9 +6,11 @@ import java.util.Queue;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class Cashier {
+public abstract class Cashier {
 
-	Integer pendingItems = 0;
+	protected int delayFactor = 1;
+
+	Integer normalizedPendingItems = 0;
 
 	Integer pendingCustomers = 0;
 
@@ -20,7 +22,9 @@ public class Cashier {
 
 	Integer cashierId;
 
-	private static final Logger logger = LogManager.getLogger(Cashier.class);
+	protected String name;
+
+	protected static final Logger logger = LogManager.getLogger(Cashier.class);
 
 	public Cashier() {
 		id++;
@@ -30,15 +34,10 @@ public class Cashier {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "Cashier-" + cashierId;
+		return name + cashierId;
 	}
 
-	public void addCustomer(Customer aCustomer) {
-		logger.trace("Customer added " + aCustomer);
-		customers.add(aCustomer);
-		pendingCustomers++;
-		pendingItems += aCustomer.getNumberofItems();
-	}
+	public abstract void addCustomer(Customer aCustomer);
 
 	public void processClockTick(int tick) {
 		currentTime = tick;
@@ -46,8 +45,9 @@ public class Cashier {
 		if (!customers.isEmpty()) {
 			Customer aCustomer = customers.peek();
 			try {
-				pendingItems--;
-				aCustomer.billOneItem();
+				normalizedPendingItems--;
+				if(delayLatch())
+					aCustomer.billOneItem();
 			} catch (NoItemsToBillException e) {
 				customers.remove();
 				pendingCustomers--;
@@ -56,22 +56,30 @@ public class Cashier {
 	}
 
 	public void dump() {
-		logger.trace(
-				this + " tick=" + currentTime +" id ="+getCashierId()+ " Pending Cus=" + getPendingCustomers() + " Pending Items=" + getPendingItems());
+		logger.trace(this + " tick=" + currentTime + " id =" + getCashierId() + " Pending Cus=" + getPendingCustomers()
+				+ " Pending Items=" + getNormalizedPendingItems());
 	}
-	
-	
 
 	public Integer getPendingCustomers() {
 		return pendingCustomers;
 	}
 
-	public Integer getPendingItems() {
-		return pendingItems;
+	public Integer getNormalizedPendingItems() {
+		return normalizedPendingItems;
 	}
-	
+
 	public Integer getCashierId() {
 		return cashierId;
 	}
 
+	int delaybuffer = 0;
+
+	private boolean delayLatch() {
+		delaybuffer++;
+		if (delaybuffer == delayFactor) {
+			delaybuffer = 0;
+			return true;
+		}
+		return false;
+	}
 }
