@@ -1,6 +1,7 @@
 package com.anand.shopquiz.quick_simulate;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -19,12 +20,12 @@ public class ShopTest {
 	private Cashier cashier;
 	
 	
-
 	@Before
 	public void createSingleCashierShop() {
 		Queue<Customer> customers = new LinkedList<Customer>();
 		customers.add(new Customer(1, 2, CustomerType.A));
 		customers.add(new Customer(2, 5, CustomerType.A));
+		customers.add(new Customer(4, 5, CustomerType.A));
 		customers.add(new Customer(4, 5, CustomerType.A));
 		
 		List<Cashier> cashiers = new ArrayList<Cashier>();
@@ -61,17 +62,24 @@ public class ShopTest {
 	}
 	
 	@Test
-	public void testPendingCustomersAfterFullExecution() {
+	public void testPendingCustomersAfter14() {
 		runClock(14);
+		assertEquals("After 14 sec there should be 1 pending customer", 1, (int) cashier.pendingCustomers);
+		assertEquals("After 14 sec there should be 4 pending items", 4, (int) cashier.pendingItems);
+	}
+	
+	@Test
+	public void testPendingCustomersAfterFullExecution() {
+		runClock(18);
 		assertEquals("After 14 sec there should be 0 pending customer", 0, (int) cashier.pendingCustomers);
 		assertEquals("After 14 sec there should be 0 pending items", 0, (int) cashier.pendingItems);
 	}
 	
 	@Test
 	public void testPendingCustomersAfterOvershoot() {
-		runClock(15);
-		assertEquals("After 15 sec there should be 0 pending customer", 0, (int) cashier.pendingCustomers);
-		assertEquals("After 15 sec there should be 0 pending items", 0, (int) cashier.pendingItems);
+		runClock(19);
+		assertEquals("After 18 sec there should be 0 pending customer", 0, (int) cashier.pendingCustomers);
+		assertEquals("After 18 sec there should be 0 pending items", 0, (int) cashier.pendingItems);
 	}
 
 

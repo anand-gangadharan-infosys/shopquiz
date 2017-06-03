@@ -14,8 +14,8 @@ public class CashierTest {
 
 	Cashier cashier;
 
-	
 	static Queue<Customer> customers;
+
 
 	@Before
 	public void createCashier() {
@@ -26,15 +26,24 @@ public class CashierTest {
 		customers.add(new Customer(4, 5, CustomerType.A));
 	}
 
-	private void runClock(int end) {
-		
-		for (int i = 0; i <= end; i++) {
+	public void createSimultaneousCustomerCashier() {
+		cashier = new Cashier();
+		customers = new LinkedList<Customer>();
+		customers.add(new Customer(1, 2, CustomerType.A));
+		customers.add(new Customer(2, 3, CustomerType.A));
+		customers.add(new Customer(2, 4, CustomerType.A));
+	}
+
+	private void runClock(int duration) {
+		for (int i = 0; i <= duration; i++) {
 			cashier.processClockTick(i);
-			Customer aCustomer = customers.peek();
-			if (aCustomer!= null && aCustomer.arrivalMoment == i) {
+			Customer aCustomer = null;
+			while ((aCustomer = customers.peek()) != null && (aCustomer.arrivalMoment == i)) {
 				customers.remove();
 				cashier.addCustomer(aCustomer);
 			}
+			customers.peek();
+
 			cashier.dump();
 		}
 	}
@@ -59,19 +68,46 @@ public class CashierTest {
 		assertEquals("After 3 sec there should be 1 pending customer", 1, (int) cashier.pendingCustomers);
 		assertEquals("After 3 sec there should be 10 pending items", 5, (int) cashier.pendingItems);
 	}
-	
+
 	@Test
 	public void testPendingCustomersAfterFullExecution() {
 		runClock(14);
 		assertEquals("After 14 sec there should be 0 pending customer", 0, (int) cashier.pendingCustomers);
 		assertEquals("After 14 sec there should be 0 pending items", 0, (int) cashier.pendingItems);
 	}
-	
+
 	@Test
 	public void testPendingCustomersAfterOvershoot() {
 		runClock(15);
 		assertEquals("After 15 sec there should be 0 pending customer", 0, (int) cashier.pendingCustomers);
 		assertEquals("After 15 sec there should be 0 pending items", 0, (int) cashier.pendingItems);
+	}
+
+	@Test
+	public void testSimultaneousCustomers2() {
+		createSimultaneousCustomerCashier();
+		runClock(2);
+		assertEquals("After 2 sec there should be 3 pending customer", 3, (int) cashier.pendingCustomers);
+		assertEquals("After 2 sec there should be 8 pending items", 8, (int) cashier.pendingItems);
+		
+	}
+	
+	@Test
+	public void testSimultaneousCustomers4() {
+		createSimultaneousCustomerCashier();
+		runClock(4);
+		assertEquals("After 4 sec there should be 3 pending customer", 2, (int) cashier.pendingCustomers);
+		assertEquals("After 4 sec there should be 6 pending items", 6, (int) cashier.pendingItems);
+		
+	}
+	
+	@Test
+	public void testSimultaneousCustomers10() {
+		createSimultaneousCustomerCashier();
+		runClock(10);
+		assertEquals("After 10 sec there should be 0 pending customer", 0, (int) cashier.pendingCustomers);
+		assertEquals("After 10 sec there should be 0 pending items", 0, (int) cashier.pendingItems);
+		
 	}
 
 }

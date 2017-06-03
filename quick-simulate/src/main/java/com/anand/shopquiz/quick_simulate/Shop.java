@@ -1,6 +1,7 @@
 package com.anand.shopquiz.quick_simulate;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -16,8 +17,8 @@ public class Shop {
 	private static final Logger logger = LogManager.getLogger(Shop.class);
 
 	List<Cashier> cashiers = new ArrayList<Cashier>();
-	
-	//Sorted chronologically
+
+	// Sorted chronologically
 	Queue<Customer> walkinCustomers = new LinkedList<Customer>();
 
 	public Shop(List<Cashier> cashiers, Queue<Customer> customers) {
@@ -58,14 +59,15 @@ public class Shop {
 		}
 	}
 
-	private Cashier findShortestLineCashier() {
-		cashiers.sort(new CashierCustomerLengthComparator());
-		return cashiers.get(0);
+	public Cashier findLowestItemCashier() {
+		logger.info(" findLowestItemCashier");
+		return sortAndReturnHead(new CashierPendingItemsComparator());
 	}
 
-	private Cashier findLowestItemCashier() {
-		cashiers.sort(new CashierPendingItemsComparator());
-		return cashiers.get(0);
+	public Cashier findShortestLineCashier() {
+		logger.info(" findShortestLineCashier");
+		return sortAndReturnHead(new CashierCustomerLengthComparator());
+
 	}
 
 	public boolean isDone() {
@@ -77,6 +79,18 @@ public class Shop {
 			}
 		}
 		return true;
+	}
+
+	private Cashier sortAndReturnHead(Comparator<Cashier> comparator) {
+		cashiers.sort(comparator);
+		logger.debug(" Sorting Cashiers ");
+		for (Iterator<Cashier> iterator = cashiers.iterator(); iterator.hasNext();) {
+			Cashier cashier = iterator.next();
+			logger.trace("cashier id "+cashier.getCashierId());
+		}
+		Cashier res = cashiers.get(0);
+		logger.info(res);
+		return res;
 	}
 
 }

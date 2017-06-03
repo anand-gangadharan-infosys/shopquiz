@@ -7,46 +7,43 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class Cashier {
-	
+
 	Integer pendingItems = 0;
-	
+
 	Integer pendingCustomers = 0;
-	
+
 	int currentTime = 0;
-	
+
 	Queue<Customer> customers = new LinkedList<Customer>();
-	
+
 	static int id = 0;
-	
+
 	Integer cashierId;
-	
-	
+
 	private static final Logger logger = LogManager.getLogger(Cashier.class);
-	
-		
-	public Cashier(){
+
+	public Cashier() {
 		id++;
 		cashierId = id;
 	}
-	
+
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "Cashier-"+cashierId;
+		return "Cashier-" + cashierId;
 	}
-	
-	
-	public void addCustomer(Customer aCustomer){
-		logger.trace("Customer added "+aCustomer);
+
+	public void addCustomer(Customer aCustomer) {
+		logger.trace("Customer added " + aCustomer);
 		customers.add(aCustomer);
 		pendingCustomers++;
 		pendingItems += aCustomer.getNumberofItems();
 	}
-	
+
 	public void processClockTick(int tick) {
 		currentTime = tick;
-		
-		if(!customers.isEmpty()){
+
+		if (!customers.isEmpty()) {
 			Customer aCustomer = customers.peek();
 			try {
 				pendingItems--;
@@ -57,10 +54,24 @@ public class Cashier {
 			}
 		}
 	}
-	
-	public void dump(){
-		logger.trace(this+" tick="+currentTime+" Pending Cus="+pendingCustomers+" Pending Items="+pendingItems);
+
+	public void dump() {
+		logger.trace(
+				this + " tick=" + currentTime +" id ="+getCashierId()+ " Pending Cus=" + getPendingCustomers() + " Pending Items=" + getPendingItems());
 	}
 	
 	
+
+	public Integer getPendingCustomers() {
+		return pendingCustomers;
+	}
+
+	public Integer getPendingItems() {
+		return pendingItems;
+	}
+	
+	public Integer getCashierId() {
+		return cashierId;
+	}
+
 }
