@@ -42,8 +42,9 @@ public class Shop {
 	}
 
 	/**
-	 * Advance all cashiers as they process items. Later checks walkin customers
-	 * of this moment and add them to appropriate queues
+	 * Advance all cashiers as they process items. Later checks walk-in( after
+	 * picking up items) customers of this moment and add them to appropriate
+	 * queues
 	 * 
 	 * @param tick
 	 */

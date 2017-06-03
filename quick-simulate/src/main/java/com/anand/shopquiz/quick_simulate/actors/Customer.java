@@ -1,5 +1,8 @@
 package com.anand.shopquiz.quick_simulate.actors;
 
+import java.util.StringTokenizer;
+
+import com.anand.shopquiz.quick_simulate.exceptions.InvalidConfigFileException;
 import com.anand.shopquiz.quick_simulate.exceptions.NoItemsToBillException;
 
 public class Customer {
@@ -9,10 +12,49 @@ public class Customer {
 	}
 
 	private CustomerType type;
-	private int arrivalMoment;
+	private Integer arrivalMoment;
 	private int numberofItems;
 	private static int id = 0;
 	private String objectIdentifier;
+
+	public Customer(String serialRepresntation) throws InvalidConfigFileException {
+		StringTokenizer st = new StringTokenizer(serialRepresntation);
+		if (st.countTokens() != 3) {
+			throw new InvalidConfigFileException("Expects Type arrivaltime noItems for all lines except first");
+		}
+		String typeStr = st.nextToken();
+		String arrivalTime = st.nextToken();
+		String noOfItemsStr = st.nextToken();
+
+		if (typeStr.equalsIgnoreCase("A")) {
+			type = CustomerType.A;
+		} else if (typeStr.equalsIgnoreCase("B")) {
+			type = CustomerType.B;
+		} else {
+			throw new InvalidConfigFileException("Customer Type should be A or B");
+		}
+
+		try {
+			arrivalMoment = Integer.parseInt(arrivalTime);
+			if (arrivalMoment < 0) {
+				throw new InvalidConfigFileException(
+						"Arrival Moment is Negetive. Sorry we are yet to invent time travel");
+			}
+		} catch (NumberFormatException e) {
+			throw new InvalidConfigFileException("Arrival Time should be a Number (in Minutes)");
+		}
+		
+		try {
+			numberofItems = Integer.parseInt(noOfItemsStr);
+			if (numberofItems <= 0) {
+				throw new InvalidConfigFileException(
+						"Items too less. You need to buy Something");
+			}
+		} catch (NumberFormatException e) {
+			throw new InvalidConfigFileException("NumberofItems should be a Whole Number above 1");
+		}
+
+	}
 
 	public Customer(int arrivalMoment, int numberofItems, CustomerType type) {
 		id++;
@@ -32,7 +74,7 @@ public class Customer {
 		return numberofItems;
 	}
 
-	public int getArrivalMoment() {
+	public Integer getArrivalMoment() {
 		return arrivalMoment;
 	}
 
