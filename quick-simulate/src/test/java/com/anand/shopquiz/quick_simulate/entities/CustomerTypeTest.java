@@ -69,11 +69,11 @@ public class CustomerTypeTest {
 		assertEquals(1, (int) cashier4.getPendingCustomers());
 		assertEquals(1, (int) cashier5.getPendingCustomers());
 
-		assertEquals(6, (int) cashier1.getNormalizedPendingItems());
-		assertEquals(6, (int) cashier2.getNormalizedPendingItems());
-		assertEquals(6, (int) cashier3.getNormalizedPendingItems());
-		assertEquals(6, (int) cashier4.getNormalizedPendingItems());
-		assertEquals(6, (int) cashier5.getNormalizedPendingItems());
+		assertEquals(6, (int) cashier1.getPendingItems());
+		assertEquals(6, (int) cashier2.getPendingItems());
+		assertEquals(6, (int) cashier3.getPendingItems());
+		assertEquals(6, (int) cashier4.getPendingItems());
+		assertEquals(6, (int) cashier5.getPendingItems());
 	}
 
 	@Test
@@ -94,11 +94,11 @@ public class CustomerTypeTest {
 		assertEquals(1, (int) cashier4.getPendingCustomers());
 		assertEquals(1, (int) cashier5.getPendingCustomers());
 
-		assertEquals(6, (int) cashier1.getNormalizedPendingItems());
-		assertEquals(7, (int) cashier2.getNormalizedPendingItems());
-		assertEquals(8, (int) cashier3.getNormalizedPendingItems());
-		assertEquals(9, (int) cashier4.getNormalizedPendingItems());
-		assertEquals(10, (int) cashier5.getNormalizedPendingItems());
+		assertEquals(6, (int) cashier1.getPendingItems());
+		assertEquals(7, (int) cashier2.getPendingItems());
+		assertEquals(8, (int) cashier3.getPendingItems());
+		assertEquals(9, (int) cashier4.getPendingItems());
+		assertEquals(10, (int) cashier5.getPendingItems());
 	}
 
 	@Test
@@ -121,11 +121,11 @@ public class CustomerTypeTest {
 		assertEquals(1, (int) cashier4.getPendingCustomers());
 		assertEquals(1, (int) cashier5.getPendingCustomers());
 
-		assertEquals(16, (int) cashier1.getNormalizedPendingItems());
-		assertEquals(17, (int) cashier2.getNormalizedPendingItems());
-		assertEquals(8, (int) cashier3.getNormalizedPendingItems());
-		assertEquals(9, (int) cashier4.getNormalizedPendingItems());
-		assertEquals(10, (int) cashier5.getNormalizedPendingItems());
+		assertEquals(16, (int) cashier1.getPendingItems());
+		assertEquals(17, (int) cashier2.getPendingItems());
+		assertEquals(8, (int) cashier3.getPendingItems());
+		assertEquals(9, (int) cashier4.getPendingItems());
+		assertEquals(10, (int) cashier5.getPendingItems());
 	}
 
 }

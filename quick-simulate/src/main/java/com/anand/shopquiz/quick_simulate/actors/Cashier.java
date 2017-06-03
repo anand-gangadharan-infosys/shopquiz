@@ -9,20 +9,20 @@ import org.apache.logging.log4j.Logger;
 import com.anand.shopquiz.quick_simulate.exceptions.NoItemsToBillException;
 
 /**
- * Cashier of the Shop. Note that a normalized pending items is maintained and
- * it is invariant for all types of cashiers.
+ * Cashier of the Shop. Note that a pending items is maintained at cashier level
+ * too.
  * 
  * @author anand_gangadharan
  *
  */
-public abstract class Cashier {
+public class Cashier {
 
 	private int currentTime = 0;
 	private static int id = 0;
 	private Integer cashierId;
 
 	protected int delayFactor = 1;
-	protected Integer normalizedPendingItems = 0;
+	protected Integer pendingItems = 0;
 	protected Integer pendingCustomers = 0;
 	protected Queue<Customer> customers = new LinkedList<Customer>();
 	protected String name;
@@ -39,17 +39,24 @@ public abstract class Cashier {
 		return name + cashierId;
 	}
 
-	public abstract void addCustomer(Customer aCustomer);
-
+	public void addCustomer(Customer aCustomer) {
+		logger.trace("Customer added " + aCustomer);
+		customers.add(aCustomer);
+		pendingCustomers++;
+		pendingItems += aCustomer.getNumberofItems();
+	}
+	
 	public void processClockTick(int tick) {
 		currentTime = tick;
 
 		if (!customers.isEmpty()) {
 			Customer aCustomer = customers.peek();
 			try {
-				normalizedPendingItems--;
-				if (delayLatch())
+
+				if (delayLatch()) {
+					pendingItems--;
 					aCustomer.billOneItem();
+				}
 			} catch (NoItemsToBillException e) {
 				customers.remove();
 				pendingCustomers--;
@@ -59,15 +66,15 @@ public abstract class Cashier {
 
 	public void dump() {
 		logger.trace(this + " tick=" + currentTime + " id =" + getCashierId() + " Pending Cus=" + getPendingCustomers()
-				+ " Pending Items=" + getNormalizedPendingItems());
+				+ " Pending Items=" + getPendingItems());
 	}
 
 	public Integer getPendingCustomers() {
 		return pendingCustomers;
 	}
 
-	public Integer getNormalizedPendingItems() {
-		return normalizedPendingItems;
+	public Integer getPendingItems() {
+		return pendingItems;
 	}
 
 	public Integer getCashierId() {

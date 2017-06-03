@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,13 +16,16 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.io.FileUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.LoggerContext;
+import org.apache.logging.log4j.core.config.Configuration;
+import org.apache.logging.log4j.core.config.LoggerConfig;
 
 import com.anand.shopquiz.quick_simulate.actors.Cashier;
 import com.anand.shopquiz.quick_simulate.actors.Customer;
+import com.anand.shopquiz.quick_simulate.actors.ExpertCashier;
 import com.anand.shopquiz.quick_simulate.actors.TraineeCashier;
 import com.anand.shopquiz.quick_simulate.entities.Shop;
-import com.anand.shopquiz.quick_simulate.actors.Customer.CustomerType;
-import com.anand.shopquiz.quick_simulate.actors.ExpertCashier;
 import com.anand.shopquiz.quick_simulate.exceptions.InvalidConfigFileException;
 import com.anand.shopquiz.quick_simulate.utils.CustomerArrivalComparator;
 
@@ -39,8 +41,8 @@ public class Cli {
 	public Cli(String[] args) {
 
 		this.args = args;
-
 		options.addOption("h", "help", false, "show help.");
+		options.addOption("v", "verbose", true, "support levels - all trace debug info warn and error");
 		options.addOption("c", "config", true,
 				"Input Customer Arrival File for simulation. "
 						+ "The first line should contain the number of Cashiers. "
@@ -58,11 +60,21 @@ public class Cli {
 
 			if (cmd.hasOption("h"))
 				help();
-
+			
+			if (cmd.hasOption("v")){
+				String logLevel = cmd.getOptionValue("v");
+				LoggerContext ctx = (LoggerContext) LogManager.getContext(false);
+				Configuration config = ctx.getConfiguration();
+				LoggerConfig loggerConfig = config.getLoggerConfig(LogManager.ROOT_LOGGER_NAME);
+				loggerConfig.setLevel(org.apache.logging.log4j.Level.toLevel(logLevel));
+				ctx.updateLoggers();
+			}
+				
+	
 			if (cmd.hasOption("c")) {
-				log.log(Level.INFO, "Simulating " + cmd.getOptionValue("c") + " cashiers");
+				log.log(Level.INFO, "Simulating " + cmd.getOptionValue("c"));
 				String configFile = cmd.getOptionValue("c");
-				System.out.println("Working Directory = " + System.getProperty("user.dir"));
+
 
 				File file = new File(configFile);
 				try {

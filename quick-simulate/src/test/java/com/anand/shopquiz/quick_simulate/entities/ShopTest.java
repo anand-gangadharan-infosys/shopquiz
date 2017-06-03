@@ -45,7 +45,7 @@ public class ShopTest {
 	public void testGetPendingCustomersStart() {
 		runClock(1);
 		assertEquals("After 1 sec there should be 1 pending customer", 1, (int) cashier.getPendingCustomers());
-		assertEquals("After 1 sec there should be 2 pending items", 2, (int) cashier.getNormalizedPendingItems());
+		assertEquals("After 1 sec there should be 2 pending items", 2, (int) cashier.getPendingItems());
 		assertTrue(!shop.isDone());
 	}
 
@@ -53,7 +53,7 @@ public class ShopTest {
 	public void testGetPendingCustomersMore() {
 		runClock(2);
 		assertEquals("After 2 sec there should be 2 pending customer", 2, (int) cashier.getPendingCustomers());
-		assertEquals("After 2 sec there should be 6 pending items", 6, (int) cashier.getNormalizedPendingItems());
+		assertEquals("After 2 sec there should be 6 pending items", 6, (int) cashier.getPendingItems());
 		assertTrue(!shop.isDone());
 	}
 
@@ -61,7 +61,7 @@ public class ShopTest {
 	public void testGetPendingCustomersAfterExit() {
 		runClock(3);
 		assertEquals("After 3 sec there should be 1 pending customer", 1, (int) cashier.getPendingCustomers());
-		assertEquals("After 3 sec there should be 10 pending items", 5, (int) cashier.getNormalizedPendingItems());
+		assertEquals("After 3 sec there should be 10 pending items", 5, (int) cashier.getPendingItems());
 		assertTrue(!shop.isDone());
 	}
 
@@ -69,7 +69,7 @@ public class ShopTest {
 	public void testGetPendingCustomersAfter14() {
 		runClock(14);
 		assertEquals("After 14 sec there should be 1 pending customer", 1, (int) cashier.getPendingCustomers());
-		assertEquals("After 14 sec there should be 4 pending items", 4, (int) cashier.getNormalizedPendingItems());
+		assertEquals("After 14 sec there should be 4 pending items", 4, (int) cashier.getPendingItems());
 		assertTrue(!shop.isDone());
 	}
 
@@ -77,7 +77,7 @@ public class ShopTest {
 	public void testGetPendingCustomersAfterFullExecution() {
 		runClock(18);
 		assertEquals("After 14 sec there should be 0 pending customer", 0, (int) cashier.getPendingCustomers());
-		assertEquals("After 14 sec there should be 0 pending items", 0, (int) cashier.getNormalizedPendingItems());
+		assertEquals("After 14 sec there should be 0 pending items", 0, (int) cashier.getPendingItems());
 		assertTrue(shop.isDone());
 	}
 
@@ -85,7 +85,7 @@ public class ShopTest {
 	public void testGetPendingCustomersAfterOvershoot() {
 		runClock(19);
 		assertEquals("After 18 sec there should be 0 pending customer", 0, (int) cashier.getPendingCustomers());
-		assertEquals("After 18 sec there should be 0 pending items", 0, (int) cashier.getNormalizedPendingItems());
+		assertEquals("After 18 sec there should be 0 pending items", 0, (int) cashier.getPendingItems());
 		assertTrue(shop.isDone());
 	}
 

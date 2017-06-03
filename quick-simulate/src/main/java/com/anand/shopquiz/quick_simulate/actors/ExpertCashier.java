@@ -7,11 +7,4 @@ public class ExpertCashier extends Cashier {
 		name = "e-cashier";
 	}
 
-	public void addCustomer(Customer aCustomer) {
-		logger.trace("Customer added " + aCustomer);
-		customers.add(aCustomer);
-		pendingCustomers++;
-		normalizedPendingItems += aCustomer.getNumberofItems();
-	}
-
 }

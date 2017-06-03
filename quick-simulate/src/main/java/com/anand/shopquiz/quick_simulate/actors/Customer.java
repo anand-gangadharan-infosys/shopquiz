@@ -43,16 +43,17 @@ public class Customer {
 		} catch (NumberFormatException e) {
 			throw new InvalidConfigFileException("Arrival Time should be a Number (in Minutes)");
 		}
-		
+
 		try {
 			numberofItems = Integer.parseInt(noOfItemsStr);
 			if (numberofItems <= 0) {
-				throw new InvalidConfigFileException(
-						"Items too less. You need to buy Something");
+				throw new InvalidConfigFileException("Items too less. You need to buy Something");
 			}
 		} catch (NumberFormatException e) {
 			throw new InvalidConfigFileException("NumberofItems should be a Whole Number above 1");
 		}
+		id++;
+		objectIdentifier = Integer.toString(id);
 
 	}
 

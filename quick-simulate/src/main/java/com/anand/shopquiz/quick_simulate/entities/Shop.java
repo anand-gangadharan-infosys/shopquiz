@@ -51,6 +51,7 @@ public class Shop {
 	public void processClockTick(int tick) {
 		advanceCashierQueues(tick);
 		enqueNewCustomers(tick);
+		logger.info(" --- END CLOCK TICK --- "+tick);
 	}
 
 	private void enqueNewCustomers(int tick) {
@@ -78,6 +79,7 @@ public class Shop {
 		for (Iterator<Cashier> iterator = cashiers.iterator(); iterator.hasNext();) {
 			Cashier cashier = iterator.next();
 			cashier.processClockTick(tick);
+			cashier.dump();
 		}
 	}
 
@@ -115,7 +117,7 @@ public class Shop {
 			logger.trace("cashier id " + cashier.getCashierId());
 		}
 		Cashier res = cashiers.get(0);
-		logger.info(res);
+		logger.info("selected "+res);
 		return res;
 	}
 
