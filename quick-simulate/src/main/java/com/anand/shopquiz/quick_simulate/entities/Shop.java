@@ -1,6 +1,7 @@
 package com.anand.shopquiz.quick_simulate.entities;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -110,7 +111,7 @@ public class Shop {
 	}
 
 	private Cashier sortAndReturnHead(Comparator<Cashier> comparator) {
-		cashiers.sort(comparator);
+		Collections.sort(cashiers,comparator);
 		logger.debug(" Sorting Cashiers ");
 		for (Iterator<Cashier> iterator = cashiers.iterator(); iterator.hasNext();) {
 			Cashier cashier = iterator.next();

@@ -3,6 +3,7 @@ package com.anand.shopquiz.quick_simulate;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -88,7 +89,7 @@ public class Cli {
 						}
 						i++;
 					}
-					customers.sort(new CustomerArrivalComparator());
+					Collections.sort(customers, new CustomerArrivalComparator());
 					sortedCustomers = new LinkedList<Customer>(customers);
 
 					startSimulation();
