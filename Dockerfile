@@ -14,23 +14,25 @@ RUN \
   apt-get -y upgrade && \
   apt-get -qq update && \
   apt-get install -y git htop man unzip vim wget && \
-  rm -rf /var/lib/apt/lists/* && \
-  wget https://github.com/anand-gangadharan-infosys/shopquiz/archive/master.zip && \
-  unzip master.zip && \
-  cd shopquiz-master/quick-simulate && \
-  mvn install 
+  rm -rf /var/lib/apt/lists/*
 
 
 # Add files.
 ADD vm-files/.bashrc /root/.bashrc
 ADD vm-files/.bash_login /root/.bash_login
+ADD vm-files/build.sh /root/build.sh
+ADD vm-files/run.sh /root/run.sh
+
+RUN chmod +x /root/build.sh
+RUN chmod +x /root/run.sh
+
+RUN /root/build.sh
 
 # Set environment variables.
 ENV HOME /root
 
 # Define working directory.
 WORKDIR /root
-# Install app server
 
 # Define default command.
 CMD ["bash"]

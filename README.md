@@ -2,15 +2,19 @@
 
 ## How to build
 
-* Import the project to eclipse as an eclipse maven project. You have the option to run it in Eclipse now.
-* Alternative option to build a jar for distribution. For this if you have m2e plugin in eclipse, just right click and Run As Maven Install. Check the target folder for results.
-
 * The real quick way is to run the quick-simulate-1.0.jar, which I built in the home directory. Note that it picks up dependency from dependency_jar folder. These two are of no consequence if you are planning to build one yourself.
 
-`java -jar quick-simulate-1.0.jar` 
-`java -jar quick-simulate-1.0.jar -c SampleRun.txt` 
+`java -jar quick-simulate-1.0.jar`
+`java -jar quick-simulate-1.0.jar -c SampleRun.txt`
 
 `java -jar quick-simulate-1.0.jar -c SampleRun.txt -v info` if you want to trace execution.
+
+* I have created a Docker container to run this as. Of course you need Docker running in your computer. In that case just run the `platform-setup.sh`. This will spin a ubuntu docker container with all this app build and run necessities, pulling it from GitHub and build it. You just need to exec into the container and at /root you have a run.sh waiting for you.
+`docker exec -it <containerId> /bin/bash`
+* Import the project to eclipse as an eclipse maven project. You have the option to run it in Eclipse now.
+
+* Alternative option to build a jar for distribution. For this if you have m2e plugin in eclipse, just right click and Run As Maven Install. Check the target folder for results.
+
 
 ## This App solves the puzzle
 ---
@@ -299,4 +303,3 @@ Finished at: t=11 minutes
 (Note that this example illustrates the requirement that customers of type A choose before
 
 customers of type B).
-
