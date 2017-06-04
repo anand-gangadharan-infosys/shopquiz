@@ -1,5 +1,6 @@
 # shopquiz
 
+All interesting stuff are inside quick-simulate. vm-files and platform-setup.sh are for Docker build. quick-simulate has ready made binaries.
 ## How to build
 
 * The real quick way is to run the quick-simulate-1.0.jar, which I built in the home directory. Note that it picks up dependency from dependency_jar folder. These two are of no consequence if you are planning to build one yourself.
@@ -9,7 +10,7 @@
 
 `java -jar quick-simulate-1.0.jar -c SampleRun.txt -v info` if you want to trace execution.
 
-* I have created a Docker container to run this as. Of course you need Docker running in your computer. In that case just run the `platform-setup.sh`. This will spin a ubuntu docker container with all this app build and run necessities, pulling it from GitHub and build it. You just need to exec into the container and at /root you have a run.sh waiting for you.
+* I have created a Docker container to run this as well. Of course you need Docker running in your computer. In that case just run the `platform-setup.sh`. This will spin a ubuntu docker container with all this app build and run necessities, pulling it from GitHub and build it. You just need to exec into the container and at `/root` you have a `run.sh` waiting for you.
 `docker exec -it <containerId> /bin/bash`
 * Import the project to eclipse as an eclipse maven project. You have the option to run it in Eclipse now.
 
